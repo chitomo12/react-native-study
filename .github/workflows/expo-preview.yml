@@ -51,11 +51,12 @@ jobs:
           eas update --branch=pr-${{ github.event.number }} --message="PR #${{ github.event.number }}: ${{ github.event.pull_request.title }}" --non-interactive
           
       - name: 🌐 Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./web-build
           destination_dir: pr-${{ github.event.number }}
+          force_orphan: true
 
       - name: 💬 Comment PR
         uses: actions/github-script@v7
