@@ -7,7 +7,7 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "start": "expo start",
-    "build:web": "expo export --platform web",
+    "build:web": "expo build:web",
     "lint": "eslint .",
     "test": "jest"
   },

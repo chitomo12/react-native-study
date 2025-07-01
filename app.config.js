@@ -21,8 +21,7 @@ export default {
       package: 'com.reactnativesample.app'
     },
     web: {
-      bundler: 'metro',
-      output: 'static'
+      bundler: 'webpack'
     },
     updates: {
       url: 'https://u.expo.dev/36b72670-be82-47d1-911f-22b299b81261'

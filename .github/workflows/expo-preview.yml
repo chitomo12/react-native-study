@@ -41,8 +41,8 @@ jobs:
 
       - name: 🚀 Build Web Version
         run: |
-          npx expo export --platform web
-          mv dist web-build
+          npm run build:web
+          ls -la web-build || ls -la dist || echo "Checking build output..."
           
       - name: 📱 Create EAS Update (Mobile)
         env:
