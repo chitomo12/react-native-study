@@ -42,7 +42,10 @@ jobs:
       - name: 🚀 Build Web Version
         run: |
           npm run build:web
-          ls -la web-build || ls -la dist || echo "Checking build output..."
+          ls -la dist
+          mkdir -p web-build
+          cp -r dist/* web-build/ || echo "Build output not found, checking alternatives..."
+          ls -la web-build
           
       - name: 📱 Create EAS Update (Mobile)
         env:
