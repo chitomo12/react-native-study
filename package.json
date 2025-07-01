@@ -7,13 +7,16 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "start": "expo start",
-    "build:web": "expo export --platform web",
+    "build:web": "expo export:web",
+    "qr": "node scripts/qr-deploy.js",
+    "qr:branch": "node scripts/qr-deploy.js",
     "lint": "eslint .",
     "test": "jest"
   },
   "dependencies": {
     "expo": "~49.0.15",
     "expo-status-bar": "~1.6.0",
+    "expo-updates": "~0.18.19",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.72.6",
@@ -21,10 +24,13 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@babel/preset-react": "^7.27.1",
     "@expo/webpack-config": "^19.0.0",
+    "babel-plugin-react-native-web": "^0.20.0",
     "eslint": "^8.19.0",
     "jest": "^29.2.1",
-    "prettier": "^2.4.1"
+    "prettier": "^2.4.1",
+    "webpack-cli": "^6.0.1"
   },
   "engines": {
     "node": ">=16"

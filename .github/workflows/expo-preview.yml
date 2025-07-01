@@ -7,6 +7,12 @@ on:
 jobs:
   preview:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+      contents: write
+      pages: write
+      id-token: write
     steps:
       - name: 🏗 Setup repo
         uses: actions/checkout@v4
@@ -23,15 +29,37 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
+      - name: 🔐 Authenticate with Expo
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          echo "Verifying Expo authentication..."
+          eas whoami
+
       - name: 📦 Install dependencies
         run: npm ci
 
-      - name: 🚀 Build web
-        run: npx expo export --platform web
-
-      - name: 📱 Deploy to Expo
+      - name: 🚀 Build Web Version
         run: |
-          eas update --branch=pr-${{ github.event.number }} --message="PR #${{ github.event.number }}: ${{ github.event.pull_request.title }}"
+          npm run build:web
+          
+      - name: 🌐 Deploy to Netlify
+        uses: nwtgck/actions-netlify@v3.0
+        with:
+          publish-dir: './web-build'
+          production-branch: main
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "PR #${{ github.event.number }}: ${{ github.event.pull_request.title }}"
+          alias: pr-${{ github.event.number }}
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          
+      - name: 📱 Create EAS Update (Mobile)
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          eas update --branch=pr-${{ github.event.number }} --message="PR #${{ github.event.number }}: ${{ github.event.pull_request.title }}" --non-interactive
 
       - name: 💬 Comment PR
         uses: actions/github-script@v7
@@ -42,18 +70,33 @@ jobs:
               repo: context.repo.repo,
               issue_number: context.issue.number,
             });
-            
+
             const botComment = comments.find(comment => 
-              comment.user.type === 'Bot' && comment.body.includes('🚀 Expo Web Preview')
+              comment.user.type === 'Bot' && comment.body.includes('🚀 App Preview')
             );
+
+            const expoUrl = `exp://exp.host/@chitomo12/rn-study?branch=pr-${{ github.event.number }}`;
+            const qrCodeUrl = `https://qr-server.com/api/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(expoUrl)}`;
             
-            const body = `🚀 **Expo Web Preview**
-            
+            const body = `🚀 **App Preview**
+
             Your PR has been deployed! You can preview it here:
-            - **Web Preview**: https://expo.dev/@chitomo12/react-native-sample?branch=pr-${{ github.event.number }}
             
-            This preview will be updated automatically when you push new commits.`;
+            ## 📱 Mobile Preview (Expo Go)
+            **Scan this QR code with Expo Go app:**
             
+            ![QR Code](${qrCodeUrl})
+            
+            Or use this direct link: ${expoUrl}
+            
+            ## 🌐 Web Preview
+            **View in browser:** https://pr-${{ github.event.number }}--react-native-study.netlify.app/
+            
+            *Deployed with Netlify*
+
+            ---
+            *This preview will be updated automatically when you push new commits.*`;
+
             if (botComment) {
               github.rest.issues.updateComment({
                 owner: context.repo.owner,

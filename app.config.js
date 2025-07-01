@@ -1,16 +1,16 @@
 export default {
   expo: {
     name: 'ReactNativeSample',
-    slug: 'react-native-sample',
+    slug: 'rn-study',
+    owner: 'chitomo12',
     version: '1.0.0',
-    orientation: 'portrait',
-    icon: './assets/icon.png',
-    userInterfaceStyle: 'light',
-    splash: {
-      image: './assets/splash.png',
-      resizeMode: 'contain',
-      backgroundColor: '#ffffff'
+    extra: {
+      eas: {
+        projectId: '36b72670-be82-47d1-911f-22b299b81261'
+      }
     },
+    orientation: 'portrait',
+    userInterfaceStyle: 'light',
     assetBundlePatterns: [
       '**/*'
     ],
@@ -18,20 +18,16 @@ export default {
       supportsTablet: true
     },
     android: {
-      adaptiveIcon: {
-        foregroundImage: './assets/adaptive-icon.png',
-        backgroundColor: '#ffffff'
-      }
+      package: 'com.reactnativesample.app'
     },
     web: {
-      favicon: './assets/favicon.png',
       bundler: 'webpack'
     },
-    plugins: [
-      'expo-router'
-    ],
-    experiments: {
-      typedRoutes: true
+    updates: {
+      url: 'https://u.expo.dev/36b72670-be82-47d1-911f-22b299b81261'
+    },
+    runtimeVersion: {
+      policy: 'appVersion'
     }
   }
 };
