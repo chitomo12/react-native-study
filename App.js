@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Alert,
   Platform,
+  Image,
 } from 'react-native';
 
 const App = () => {
@@ -46,6 +47,20 @@ const App = () => {
           <Text style={[styles.deploymentInfo, {color: isDarkMode ? '#90EE90' : '#006400'}]}>
             🌐 Netlify Web Deployment Test
           </Text>
+          
+          <View style={styles.lgtmSection}>
+            <Text style={[styles.lgtmTitle, {color: isDarkMode ? '#fff' : '#000'}]}>
+              LGTM! 👍
+            </Text>
+            <Image 
+              source={{uri: 'https://image.lgtmoon.dev/552947'}}
+              style={styles.lgtmImage}
+              resizeMode="contain"
+            />
+            <Text style={[styles.lgtmCaption, {color: isDarkMode ? '#ccc' : '#666'}]}>
+              Looks Good To Me!
+            </Text>
+          </View>
           <TouchableOpacity style={styles.button} onPress={handleButtonPress}>
             <Text style={styles.buttonText}>Press Me!</Text>
           </TouchableOpacity>
@@ -113,6 +128,37 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
+  },
+  lgtmSection: {
+    alignItems: 'center',
+    marginVertical: 20,
+    padding: 15,
+    borderRadius: 12,
+    backgroundColor: '#f8f9fa',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  lgtmTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  lgtmImage: {
+    width: 200,
+    height: 150,
+    marginVertical: 10,
+    borderRadius: 8,
+  },
+  lgtmCaption: {
+    fontSize: 14,
+    fontStyle: 'italic',
+    marginTop: 5,
   },
 });
 
