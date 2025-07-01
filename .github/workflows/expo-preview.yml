@@ -72,13 +72,25 @@ jobs:
               comment.user.type === 'Bot' && comment.body.includes('🚀 App Preview')
             );
 
+            const expoUrl = `exp://exp.host/@chitomo12/rn-study?branch=pr-${{ github.event.number }}`;
+            const qrCodeUrl = `https://qr-server.com/api/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(expoUrl)}`;
+            
             const body = `🚀 **App Preview**
 
             Your PR has been deployed! You can preview it here:
-            - **📱 Mobile Preview (Expo Go)**: exp://exp.host/@chitomo12/rn-study?branch=pr-${{ github.event.number }}
-            - **🌐 Web Preview**: https://chitomo12.github.io/react-native-study/pr-${{ github.event.number }}/
+            
+            ## 📱 Mobile Preview (Expo Go)
+            **Scan this QR code with Expo Go app:**
+            
+            ![QR Code](${qrCodeUrl})
+            
+            Or use this direct link: ${expoUrl}
+            
+            ## 🌐 Web Preview
+            **View in browser:** https://chitomo12.github.io/react-native-study/pr-${{ github.event.number }}/
 
-            This preview will be updated automatically when you push new commits.`;
+            ---
+            *This preview will be updated automatically when you push new commits.*`;
 
             if (botComment) {
               github.rest.issues.updateComment({
