@@ -43,8 +43,20 @@ const App = () => {
           <Text style={[styles.subtitle, {color: isDarkMode ? '#ccc' : '#666'}]}>
             This is a sample React Native application running on {Platform.OS}
           </Text>
+          <Text style={[styles.deploymentInfo, {color: isDarkMode ? '#90EE90' : '#006400'}]}>
+            🚀 Expo Web Deployment Test
+          </Text>
           <TouchableOpacity style={styles.button} onPress={handleButtonPress}>
             <Text style={styles.buttonText}>Press Me!</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.secondaryButton} onPress={() => {
+            if (Platform.OS === 'web') {
+              window.alert('This is a test deployment feature!');
+            } else {
+              Alert.alert('Test Feature', 'This is a test deployment feature!');
+            }
+          }}>
+            <Text style={styles.secondaryButtonText}>Test Deployment</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -71,6 +83,12 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 16,
     textAlign: 'center',
+    marginBottom: 20,
+  },
+  deploymentInfo: {
+    fontSize: 18,
+    fontWeight: '600',
+    textAlign: 'center',
     marginBottom: 30,
   },
   button: {
@@ -78,8 +96,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingVertical: 15,
     borderRadius: 8,
+    marginBottom: 15,
   },
   buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  secondaryButton: {
+    backgroundColor: '#34C759',
+    paddingHorizontal: 30,
+    paddingVertical: 15,
+    borderRadius: 8,
+  },
+  secondaryButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
