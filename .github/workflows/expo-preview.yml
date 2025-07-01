@@ -10,7 +10,7 @@ jobs:
     permissions:
       issues: write
       pull-requests: write
-      contents: read
+      contents: write
       pages: write
       id-token: write
     steps:
@@ -43,13 +43,13 @@ jobs:
         run: |
           npm run build:web
           ls -la web-build
-          
+
       - name: 📱 Create EAS Update (Mobile)
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
           eas update --branch=pr-${{ github.event.number }} --message="PR #${{ github.event.number }}: ${{ github.event.pull_request.title }}" --non-interactive
-          
+
       - name: 🌐 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
