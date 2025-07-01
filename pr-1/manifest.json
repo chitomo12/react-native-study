@@ -1,0 +1,16 @@
+{
+  "display": "standalone",
+  "lang": "en",
+  "name": "ReactNativeSample",
+  "short_name": "ReactNativeSample",
+  "start_url": "/?utm_source=web_app_manifest",
+  "orientation": "portrait",
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "http://play.google.com/store/apps/details?id=com.reactnativesample.app",
+      "id": "com.reactnativesample.app"
+    }
+  ],
+  "prefer_related_applications": true
+}
