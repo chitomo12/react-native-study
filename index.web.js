@@ -7,5 +7,5 @@ const appName = appConfig.name;
 AppRegistry.registerComponent(appName, () => App);
 AppRegistry.runApplication(appName, {
   initialProps: {},
-  rootTag: document.getElementById('app-root'),
+  rootTag: document.getElementById('root'),
 });
