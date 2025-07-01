@@ -8,6 +8,8 @@
     "web": "expo start --web",
     "start": "expo start",
     "build:web": "expo export:web",
+    "qr": "node scripts/qr-deploy.js",
+    "qr:branch": "node scripts/qr-deploy.js",
     "lint": "eslint .",
     "test": "jest"
   },

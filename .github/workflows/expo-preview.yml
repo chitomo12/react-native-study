@@ -43,13 +43,17 @@ jobs:
         run: |
           npm run build:web
           
-      - name: 🌐 Deploy to GitHub Pages (EAS Hosting Fallback)
-        uses: peaceiris/actions-gh-pages@v4
+      - name: 🌐 Deploy to Netlify
+        uses: nwtgck/actions-netlify@v3.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./web-build
-          destination_dir: pr-${{ github.event.number }}
-          force_orphan: true
+          publish-dir: './web-build'
+          production-branch: main
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "PR #${{ github.event.number }}: ${{ github.event.pull_request.title }}"
+          alias: pr-${{ github.event.number }}
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           
       - name: 📱 Create EAS Update (Mobile)
         env:
@@ -86,9 +90,9 @@ jobs:
             Or use this direct link: ${expoUrl}
             
             ## 🌐 Web Preview
-            **View in browser:** https://chitomo12.github.io/react-native-study/pr-${{ github.event.number }}/
+            **View in browser:** https://pr-${{ github.event.number }}--react-native-study.netlify.app/
             
-            *Note: This app is configured for EAS Hosting and will automatically migrate when EAS Hosting becomes generally available.*
+            *Deployed with Netlify*
 
             ---
             *This preview will be updated automatically when you push new commits.*`;

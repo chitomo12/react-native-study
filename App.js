@@ -44,7 +44,7 @@ const App = () => {
             This is a sample React Native application running on {Platform.OS}
           </Text>
           <Text style={[styles.deploymentInfo, {color: isDarkMode ? '#90EE90' : '#006400'}]}>
-            🚀 Expo Web Deployment Test
+            🌐 Netlify Web Deployment Test
           </Text>
           <TouchableOpacity style={styles.button} onPress={handleButtonPress}>
             <Text style={styles.buttonText}>Press Me!</Text>

@@ -8,16 +8,9 @@
       "distribution": "internal"
     },
     "preview": {
-      "distribution": "internal",
-      "web": {
-        "output": "static"
-      }
+      "distribution": "internal"
     },
-    "production": {
-      "web": {
-        "output": "static"
-      }
-    }
+    "production": {}
   },
   "submit": {
     "production": {}
