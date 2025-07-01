@@ -37,12 +37,23 @@ jobs:
       - name: 📦 Install dependencies
         run: npm ci
 
-      - name: 🚀 Build and Deploy Web Version
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      - name: 🚀 Build Web Version
         run: |
           npm run build:web
-          eas hosting:publish --branch=pr-${{ github.event.number }} --platform=web --non-interactive
+          
+      - name: 🌐 Deploy to Netlify
+        uses: nwtgck/actions-netlify@v3.0
+        with:
+          publish-dir: './web-build'
+          production-branch: main
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "Deploy from GitHub Actions - PR #${{ github.event.number }}"
+          enable-pull-request-comment: false
+          enable-commit-comment: false
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        id: netlify
           
       - name: 📱 Create EAS Update (Mobile)
         env:
@@ -79,7 +90,7 @@ jobs:
             Or use this direct link: ${expoUrl}
             
             ## 🌐 Web Preview
-            **View in browser:** https://rn-study--pr-${{ github.event.number }}.exp.direct/
+            **View in browser:** ${{ steps.netlify.outputs.deploy-url }}
 
             ---
             *This preview will be updated automatically when you push new commits.*`;
